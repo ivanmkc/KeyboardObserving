@@ -12,6 +12,8 @@ import UIKit
 struct KeyboardObserving: ViewModifier {
 
   var offset: CGFloat
+  var animationDuration: Double?
+    
   @State var keyboardHeight: CGFloat = 0
   @State var keyboardAnimationDuration: Double = 0
 
@@ -29,8 +31,7 @@ struct KeyboardObserving: ViewModifier {
   func updateKeyboardHeight(_ notification: Notification) {
     guard let info = notification.userInfo else { return }
     // Get the duration of the keyboard animation
-    keyboardAnimationDuration = (info[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double)
-      ?? 0.25
+    keyboardAnimationDuration = animationDuration ?? (info[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double) ?? 0.25
 
     guard let keyboardFrame = info[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
       else { return }
